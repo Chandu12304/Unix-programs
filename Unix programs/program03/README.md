@@ -4,7 +4,7 @@ To understand the program that emulates the UNIX `ln` command, it's helpful to g
 
 ### **1. Files and Links**
 
-link:- <https://youtu.be/4-vye3QFTFo?si=pAVYPznL-hk-9V_6>
+reference:- <https://youtu.be/4-vye3QFTFo?si=pAVYPznL-hk-9V_6>
 
 #### **Files**:
 - **Files** are containers for storing data on your computer. They have names and contain information like text, images, or executable code.
