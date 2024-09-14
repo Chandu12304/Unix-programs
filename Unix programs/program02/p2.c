@@ -23,6 +23,7 @@ int main() {
     while ((bytes_read = read(source_fd, buffer, sizeof(buffer))) > 0) {
         write(dest_fd, buffer, bytes_read);
     }
+    printf("Succesfully Copied!")
     // Close both files
     close(source_fd);
     close(dest_fd);
