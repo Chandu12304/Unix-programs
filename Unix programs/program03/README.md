@@ -1,4 +1,4 @@
-### Program3a:
+### **Program3a**:
 
 To understand the program that emulates the UNIX `ln` command, it's helpful to grasp some fundamental concepts related to files, links, and system calls. Here's a detailed explanation from scratch:
 
@@ -66,6 +66,8 @@ Here's a detailed breakdown:
 
 
 ---
+
+### **Explaination**:
 
 1. **Include Headers**:
    - **`#include <iostream>`**: Provides functionality for input and output operations, including `std::cout` (for printing messages) and `std::cerr` (for error messages).
