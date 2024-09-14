@@ -1,11 +1,3 @@
-Here’s the explanation of the provided C file-copying program in the detailed format you've requested:
-
----
-
-### Program: Copy a file using system calls in C
-
-This program demonstrates how to copy the contents of one file (`source.txt`) to another (`destination.txt`) using system calls like `open()`, `read()`, `write()`, and `close()`.
-
 #### 1. `#include <fcntl.h>  // For open()`
 - This header file includes the definitions of the `open()` function and the constants used to specify file access modes like `O_RDONLY` and `O_WRONLY`. 
 - It helps us interact with file descriptors.
