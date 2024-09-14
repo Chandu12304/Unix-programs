@@ -65,6 +65,8 @@ This program demonstrates how to copy the contents of one file (`source.txt`) to
 #### 15. `return 0;`
 - The program returns 0, indicating successful execution.
 
+---
+
 ### Program2b:
 
 The line:
