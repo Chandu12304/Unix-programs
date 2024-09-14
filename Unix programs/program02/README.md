@@ -64,3 +64,34 @@ This program demonstrates how to copy the contents of one file (`source.txt`) to
 
 #### 15. `return 0;`
 - The program returns 0, indicating successful execution.
+
+### Program2b:
+
+The line:
+
+```c
+extern char** environ;
+```
+
+### Explanation in Simple Terms:
+
+- **`extern`**: This keyword tells the compiler that the variable `environ` is defined **somewhere else**, not in this file. It is provided by the operating system, and we are just **declaring** it here so we can use it.
+
+- **`char**`**: This means `environ` is a **pointer to a pointer of characters**. In simpler terms, it's a **list of strings**, where each string is an environment variable (like `PATH`, `HOME`, etc.).
+
+- **`environ`**: This is the **name** of the list of environment variables.
+
+### What does this do?
+- The **`environ`** variable contains a list of all the **environment variables** available in your system. Each item in the list is a string (character array) in the format `KEY=value`, such as:
+  - `PATH=/usr/local/bin:/usr/bin:/bin`
+  - `HOME=/home/user`
+  - `SHELL=/bin/bash`
+  
+- By declaring `extern char** environ;`, you are letting the program know that this list exists, and you can use it to **access and print the environment variables** in your code.
+
+### Example of Environment Variables:
+When you run a program, your operating system provides environment variables like:
+- **`PATH`**: Lists directories where executable programs are located.
+- **`HOME`**: Specifies the home directory of the current user.
+  
+These are stored in the `environ` list, and the program can read and display them.
