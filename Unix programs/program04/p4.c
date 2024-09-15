@@ -1,49 +1,41 @@
 #include <iostream>
-#include <cstdlib>
 #include <cstring>
-#include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
-// Define the shared memory key and size
-#define SHM_KEY 1234
-#define SHM_SIZE 1024
+#define SHM_KEY 1234   // Shared memory key
+#define SHM_SIZE 1024  // Shared memory size
 
 int main() {
-    // Create a key for the shared memory segment
-    key_t key = ftok(".", SHM_KEY);
-    if (key == -1) {
-        perror("ftok"); // Print error if ftok fails
-        exit(1);
-    }
-    // Create (or get) the shared memory segment
-    int shmid = shmget(key, SHM_SIZE, IPC_CREAT | 0666);
+    // Create shared memory segment
+    int shmid = shmget(SHM_KEY, SHM_SIZE, IPC_CREAT | 0666);
     if (shmid == -1) {
-        perror("shmget"); // Print error if shmget fails
-        exit(1);
+        perror("shmget");
+        return 1;
     }
-    // Attach the shared memory segment to the process's address space
-    char* shm_ptr = (char*)shmat(shmid, NULL, 0);
-    if (shm_ptr == (char*)(-1)) {
-        perror("shmat"); // Print error if shmat fails
-        exit(1);
-    }
-    // Write a message to the shared memory
-    char message[] = "Hello, shared memory!";
-std::strcpy(shm_ptr, message);
 
-    // Print the message from the shared memory
-    std::cout << "Message from shared memory: " << shm_ptr << std::endl;
-    // Detach the shared memory segment
-    if (shmdt(shm_ptr) == -1) {
-        perror("shmdt"); // Print error if shmdt fails
-        exit(1);
+    // Attach shared memory to parent process
+    char *shm_ptr = (char *)shmat(shmid, nullptr, 0);
+    if (shm_ptr == (char *)(-1)) {
+        perror("shmat");
+        return 1;
     }
-    // Remove the shared memory segment
-    if (shmctl(shmid, IPC_RMID, NULL) == -1) {
-        perror("shmctl"); // Print error if shmctl fails
-        exit(1);
+
+    // Write message to shared memory
+    strcpy(shm_ptr, "Hello from parent!");
+
+    // Fork a child process
+    if (fork() == 0) {
+        // Child reads from shared memory
+        std::cout << "Child reads: " << shm_ptr << std::endl;
+        shmdt(shm_ptr);  // Detach shared memory in child
+    } else {
+        wait(nullptr);    // Wait for child to finish
+        shmdt(shm_ptr);   // Detach shared memory in parent
+        shmctl(shmid, IPC_RMID, nullptr);  // Remove shared memory
     }
+
     return 0;
 }
-
