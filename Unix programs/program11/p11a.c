@@ -13,17 +13,14 @@ int main() {
     const int numThreads = 2;
     pthread_t threads[numThreads];
     int threadIDs[numThreads] = {1, 2}; // Thread IDs
-
     // Create threads
     for (int i = 0; i < numThreads; ++i) {
         pthread_create(&threads[i], nullptr, countTo100, &threadIDs[i]);
     }
-
     // Wait for threads to finish
     for (int i = 0; i < numThreads; ++i) {
         pthread_join(threads[i], nullptr);
     }
-
     return 0;
 }
 
