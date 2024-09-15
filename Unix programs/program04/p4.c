@@ -29,8 +29,9 @@ int main() {
         exit(1);
     }
     // Write a message to the shared memory
-    std::string message = "Hello, shared memory!";
-    std::strcpy(shm_ptr, message.c_str()); // strcpy() works with C-string( array of char ) format, whwereas message is std::string format, c_str converts it into the required format
+    char message[] = "Hello, shared memory!";
+std::strcpy(shm_ptr, message);
+
     // Print the message from the shared memory
     std::cout << "Message from shared memory: " << shm_ptr << std::endl;
     // Detach the shared memory segment
