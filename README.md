@@ -1,7 +1,7 @@
 # Unix Programs Repository
 
 ## Overview
-This repository contains a collection of Unix programs written in C++ that cover fundamental concepts and functionalities of Unix system programming. The programs range from basic socket communication, threading using `pthread`, to file handling and process communication. For wach program detailed explanations is provided to help you understand the logic from scratch.
+This repository contains a collection of Unix programs written in C/C++ that cover fundamental concepts and functionalities of Unix system programming. The programs range from basic socket communication, threading using `pthread`, to file handling and process communication. For each program detailed explanations is provided to help you understand the logic from scratch.
 
 ## Structure
 - Each program is located in its respective folder.
