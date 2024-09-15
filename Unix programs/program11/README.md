@@ -119,4 +119,92 @@ int main() {
 ---
 
 ### **Program11b**
+### Explanation of the Program
 
+This C++ program demonstrates how to create and manage multiple threads using the `pthread` library. Here’s a detailed breakdown of each part of the code:
+
+#### Includes and Constants
+
+```cpp
+#include <iostream>
+#include <pthread.h>
+
+const int numThreads = 5; // Number of threads
+```
+
+- **`#include <iostream>`**: This includes the input/output stream library, which is used for printing messages to the console.
+- **`#include <pthread.h>`**: This includes the POSIX thread library, which provides functions to create and manage threads.
+- **`const int numThreads = 5;`**: Defines a constant named `numThreads` with a value of 5, which represents the number of threads we will create.
+
+#### Thread Function
+
+```cpp
+void* printHello(void* arg) {
+    int threadNumber = *(int*)arg; // Get the thread number from the argument
+    std::cout << "Hello World from Thread " << threadNumber << std::endl;
+    return nullptr; // End of thread function
+}
+```
+
+- **`void* printHello(void* arg)`**: This is a function that will be executed by each thread. It takes a single argument of type `void*` (a pointer to any type).
+- **`int threadNumber = *(int*)arg;`**: Converts the `void*` argument to an `int*`, then dereferences it to get the thread number.
+- **`std::cout << "Hello World from Thread " << threadNumber << std::endl;`**: Prints a message to the console indicating which thread is running.
+- **`return nullptr;`**: Ends the thread function and returns a null pointer.
+
+#### Main Function
+
+```cpp
+int main() {
+    pthread_t threads[numThreads]; // Array to hold thread identifiers
+    int threadIDs[numThreads]; // Array to hold thread IDs
+
+    // Initialize thread IDs
+    for (int i = 0; i < numThreads; ++i) {
+        threadIDs[i] = i + 1; // Set thread number from 1 to numThreads
+    }
+
+    // Create and start threads
+    for (int i = 0; i < numThreads; ++i) {
+        // Pass the address of the threadID as the argument
+        pthread_create(&threads[i], nullptr, printHello, &threadIDs[i]);
+    }
+
+    // Wait for all threads to finish
+    for (int i = 0; i < numThreads; ++i) {
+        pthread_join(threads[i], nullptr);
+    }
+
+    return 0;
+}
+```
+
+- **`pthread_t threads[numThreads];`**: Declares an array of thread identifiers. Each element in this array will hold the ID of a thread.
+- **`int threadIDs[numThreads];`**: Declares an array to store thread numbers. Each thread will have a unique number.
+
+- **Initialize thread IDs**:
+    ```cpp
+    for (int i = 0; i < numThreads; ++i) {
+        threadIDs[i] = i + 1; // Set thread number from 1 to numThreads
+    }
+    ```
+    - This loop sets each element of the `threadIDs` array to a unique number from 1 to 5.
+
+- **Create and start threads**:
+    ```cpp
+    for (int i = 0; i < numThreads; ++i) {
+        pthread_create(&threads[i], nullptr, printHello, &threadIDs[i]);
+    }
+    ```
+    - **`pthread_create(&threads[i], nullptr, printHello, &threadIDs[i]);`**: Creates a new thread. 
+      - `&threads[i]`: The ID of the newly created thread will be stored in this location.
+      - `nullptr`: No special thread attributes are specified.
+      - `printHello`: The function that the new thread will run.
+      - `&threadIDs[i]`: The argument passed to the thread function (`printHello`), which is the address of `threadIDs[i]`.
+
+- **Wait for all threads to finish**:
+    ```cpp
+    for (int i = 0; i < numThreads; ++i) {
+        pthread_join(threads[i], nullptr);
+    }
+    ```
+    - **`pthread_join(threads[i], nullptr);`**: Waits for the specified thread to complete its execution before proceeding. This ensures that the main thread does not exit before the worker threads have finished their tasks.
