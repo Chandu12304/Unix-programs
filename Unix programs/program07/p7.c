@@ -1,5 +1,9 @@
 // Priority based Algorithm
+
 #include <iostream>
+#include <vector>
+#include <algorithm>
+
 using namespace std;
 
 struct Process {
@@ -10,27 +14,35 @@ struct Process {
     int turnaround; // Turnaround time
 };
 
+// Comparison function to sort processes by burst, then priority, then id
+bool compare(const Process &a, const Process &b) {
+    if (a.burst != b.burst) return a.burst < b.burst;
+    if (a.priority != b.priority) return a.priority < b.priority;
+    return a.id < b.id;
+}
+
 int main() {
     int numProcesses;
     cout << "Enter the number of processes: ";
-    cin >> numProcesses;    
-    Process processes[numProcesses];
-    // Input burst time and priority for each process
+    cin >> numProcesses;
+
+    vector<Process> processes(numProcesses);
+
     for (int i = 0; i < numProcesses; i++) {
         processes[i].id = i + 1;
         cout << "Enter burst time for process " << processes[i].id << ": ";
         cin >> processes[i].burst;
         cout << "Enter priority for process " << processes[i].id << ": ";
         cin >> processes[i].priority;
+
+        processes[i].waiting = 0;
+        processes[i].turnaround = 0;
     }
-    // Sort processes by priority (lower number means higher priority)
-    for (int i = 0; i < numProcesses - 1; i++) {
-        for (int j = 0; j < numProcesses - i - 1; j++) {
-            if (processes[j].priority > processes[j + 1].priority) {
-                swap(processes[j], processes[j + 1]);
-            }
-        }
-    }   
+
+    // Sort processes using the custom comparison function
+    sort(processes.begin(), processes.end(), compare);
+
+
     // Calculate waiting time and turnaround time
     processes[0].waiting = 0; // First process has no waiting time
     processes[0].turnaround = processes[0].burst;
