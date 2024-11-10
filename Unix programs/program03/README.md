@@ -89,7 +89,7 @@ Here's a detailed breakdown:
    - **`const char *target_file = argv[2];`**: Gets the name of the new hard link.
 
 5. **Create the Hard Link**:
-   - **`if (link(source_file, target_file) == 0)`**: Attempts to create a hard link. If successful (`link` returns `0`), it prints a success message.
+   - **`if (link(source_file, target_file) == 0)`**: Attempts to create a hard link. If successful (`link` returns `0`), it prints a success message.It creates a hard link, meaning dest.txt points to the same inode as src.txt.
    - **`std::cout << "Hard link created: " << target_file << " -> " << source_file << std::endl;`**: Confirms the creation of the hard link.
 
 6. **Handle Errors**:
