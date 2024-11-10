@@ -14,7 +14,7 @@ struct Process {
     int turnaround; // Turnaround time
 };
 
-// Comparison function to sort processes by burst, then priority, then id
+// Comparison function to sort by priority
 bool compare(const Process &a, const Process &b) {
      return a.priority < b.priority;
 }
