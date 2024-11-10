@@ -16,9 +16,7 @@ struct Process {
 
 // Comparison function to sort processes by burst, then priority, then id
 bool compare(const Process &a, const Process &b) {
-    if (a.burst != b.burst) return a.burst < b.burst;
-    if (a.priority != b.priority) return a.priority < b.priority;
-    return a.id < b.id;
+     return a.priority < b.priority;
 }
 
 int main() {
